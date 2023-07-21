@@ -1,17 +1,20 @@
-//TODO: What aren't console logs going to Chrome?
 import { Post } from "@prisma/client";
 import { prisma } from "./db";
+import Link from "next/link";
 
 export default async function Home() {
   const posts: Post[] = await prisma.post.findMany();
 
   return (
-    <main>
-      <ul>
+    <main className="page">
+      <Link href="/create">Create</Link>
+      <div className="feed">
         {posts.map((post) => (
-          <li key={post.id}>{post.content}</li>
+          <div key={post.id} className="frame">
+            <iframe srcDoc={post.content || ""} />
+          </div>
         ))}
-      </ul>
+      </div>
     </main>
   );
 }
